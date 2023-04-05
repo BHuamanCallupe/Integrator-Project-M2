@@ -1,10 +1,10 @@
-# **💪 HW6 | React Intro - Integration**
+# **💪 HW8 | React Estado LifeCycle - Integration**
 
 ## **🕒 DURACIÓN ESTIMADA**
 
-3 horas
+90 minutos
 
-</br >
+<br />
 
 ---
 
@@ -16,119 +16,184 @@
 
 ## **📝 INTRODUCCIÓN**
 
-En esta homework vamos a crear nuestro proyecto de **Rick and Morty**. Comenzaremos construyendo nuestros primeros componentes: **card**, **cards** y **searchBar**.
+Hasta el momento, en nuestra **Rick & Morty App** tenemos estos 3 componentes: **Card**, **Cards** y **SearchBar**.
 
-> [**Nota**]: todos los componentes que hagamos en esta homework son **`puros`**, por lo tanto, ninguno tiene estado, simplemente reciben datos por props. No te preocupes por el estilo de los componentes, en la siguiente homework vamos a dárselos.
+Adicionalmente, crearemos otro componente denominado **`Nav`** que será nuestra barra superior de navegación, el cual envolverá a la **`SearchBar`**.
 
-</br >
+<br />
 
 ---
 
 ## **📋 INSTRUCCIONES**
 
-## **🚀 PARTE UNO 🚀**
+### **👩‍💻 EJERCICIO 1 | Nav**
 
-<br />
-
-### **👩‍💻 EJERCICIO 1**
-
-Tu primer paso será ejecutar el comando **`npm install`** para instalar todas las dependencias dentro de esta homework.
-
-En el archivo **`App.js`** ya hay importado 3 componentes: **Card**, **Cards** y **SearchBar**. Estos componentes reciben propiedades y están siendo renderizados en nuestra aplicación.
+1. Dirígete a tu archivo **`App.js`** y elimina tu SearchBar.
+2. Crear el componente **`Nav`** dentro de la carpeta "**_components_**".
+3. Renderiza la SearchBar dentro de este componente.
 
 <br />
 
 ---
 
-### **👩‍💻 EJERCICIO 2 | Card**
+### **👩‍💻 EJERCICIO 2 | Home**
 
-Dirígete al componente **`Card`** y renderiza las siguientes propiedades de los personajes:
+1. Elimina la **Card** "_suelta_" que se está renderizando.
 
--  **name**: nombre.
--  **status**: status.
--  **species**: especie.
--  **gender**: género.
--  **origin**: origen (ten en cuenta que el nombre del origen viene dentro de otra propiedad llamada **`name`**).
--  **image**: imagen.
+2. Importa y renderiza el componente **`Nav`**.
 
-Además, cuando el usuario haga click en la **X** de "cerrar", debe ejecutarse una función que también viene como props llamada **onClose**.
+3. ¡Aplica los estilos que más quieras!
 
-> [**NOTA**]: por el momento, toda la información de los personajes la vamos a obtener a partir del archivo [**`data.js`**](./src//data.js)
+Puedes guiarte a partir de la siguiente imagen cómo puede quedar tu aplicación:
 
-<img src="./img/characterCard.png" height="250px">
+<img src="./img/layout.png" width='800px'/>
 
-<br />
-
----
-
-### **👩‍💻 EJERCICIO 3 | Cards**
-
-Utilizaremos este componente para renderizar muchos componentes **`Card`**. En otras palabras, este componente será el "_contenedor_" de todas las Cards.
-
-Lo primero que debes hacer es recibir la propiedad **`characters`** mediante las props. Esta propiedad es una arreglo con todos tus personajes. Por cada uno de ellos deberás renderizar un componente **`Card`** pasándole todas las propiedades que ya mencionamos en el ejercicio anterior.
-
-> [**NOTA**]: agrega una propiedad llamada **`key`** y que sea igual al ID del personaje.
-
-> [**NOTA**]: puedes guiarte con la [**`documentación de React`**](https://es.reactjs.org/docs/lists-and-keys.html#rendering-multiple-components) para realizar este ejercicio.
-
-<img src="./img/Cards.png" height="250px">
+> -  **Recuadro rojo**: Nav
+> -  **Recuadro amarillo**: SearchBar
+> -  **Recuadro verde**: Cards
+> -  **Recuadro azul**: Card
 
 <br />
 
 ---
 
-### **👩‍💻 EJERCICIO 4 | SearchBar**
+### **👩‍💻 EJERCICIO 3 | Estado**
 
-Este componente nos permitirá buscar y agregar nuevos personajes a nuestra aplicación.
+En este momento estamos dependiendo de un archivo **`data.js`** para recibir a los personajes. Lo que haremos ahora será crear un estado que nos permita almacenar personajes directamente.
 
-Recibe por props una función **`onSearch`**. La función **`onSearch`** se debe ejecutar cuando se haga click en el botón **`Agregar`**.
+Para esto, dirígete al componente **`App.js`** y:
 
-<img src="./img/SearchBar.png" height="50px">
+1. Elimina el import y el archivo **`data.js`**. A partir de ahora ya no lo utilizaremos.
+2. Importa el hook useState.
+3. Crea un estado local llamado `characters` el cual se debe inicializar como un arreglo vacío.
 
 <br />
 
 ---
 
-## **🚀 PARTE DOS 🚀**
+### **👩‍💻 EJERCICIO 4 | On Search**
 
-<br />
+Ahora crearás una función llamada **`onSearch`** que te servirá para agregar nuevos personajes al estado que creaste en el ejercicio anterior.
 
-### **¡Listo! Es hora de crear nuestra app...**
+1. Crea una función llamada **onSearch** en tu archivo **`App.js`**.
+2. Cada vez que esta función sea ejecutada deberá agregar un nuevo personaje a tu estado local **characters**.
 
-¿Ya completaste los puntos anteriores y todo funciona? ¡Perfecto! Ya podemos comenzar a crear nuestra propia app:
+Como por el momento no vamos a recibir nuevos personajes, utilizaremos uno "_por default_". Es decir, cada vez que se ejecute la función anterior se debe agregar este personaje al estado local.
 
-1. Dirígete a un nuevo directorio desde tu terminal (por ejemplo, tu escritorio). Allí es dónde crearás tu aplicación.
-
-2. Ahora utiliza **_`CRA`_** (create-react-app) mediante **npx** para crear una nueva app de React:
-
-```bash
-npx create-react-app rick_and_morty
+```js
+const example = {
+   id: 1,
+   name: 'Rick Sanchez',
+   status: 'Alive',
+   species: 'Human',
+   gender: 'Male',
+   origin: {
+      name: 'Earth (C-137)',
+      url: 'https://rickandmortyapi.com/api/location/1',
+   },
+   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+};
 ```
 
-> [**NOTA**]: para el nombre de tu app no puedes usar mayúsculas ni el símbolo "&".
+<br />
 
-Al término del proceso, podrás ver que en tu directorio se creó una nueva carpeta llamada "rick_and_morty". Abre esta carpeta con tu Visual Studio Code. Allí encontrarás algo como esto:
+---
 
-<img src="./img/cra_01.png" height="200px">
+### **👩‍💻 EJERCICIO 5 | SearchBar & onSearch**
 
-3. Dentro de esta nueva carpeta ejecuta:
+Una vez que hayas creado la función **`onSearch`** deberás:
 
-```bash
-    npm start
-```
+1. Pasársela como propiedad al componente **`Nav`**.
+2. Pasársela como propiedad al componente **`SearchBar`**.
 
-> [**NOTA**]: si aún tenemos corriendo el server local de la homework Integration Parte 1, vamos a obtener un error debido a que el puerto predeterminado (3000) está ocupado. Podemos elegir utilizar otro puerto, o terminar el proceso anterior y luego reintentarlo.
+¡Listo! Si levantas tu proyecto y compruebas en tu navegador, cade vez que haces click sobre el botón "**_Agregar_**", se mostrará un nuevo personaje. Debería quedar algo así:
 
-Esperamos que se "levante" el servidor local y luego veremos algo así:
-
-<img src="./img/cra_02.gif" height="360px">
+<img src="./img/onSearchFunction.gif" alt="" />
 
 <br />
 
 ---
 
-Ahora simplemente debes seguir estos pasos:
+## **🔎 ALTO AQUÍ**
 
-1. Reemplaza la carpeta **`src`** de tu nuevo proyecto por la que tienes en esta carpeta ([**src**](./src/)).
+Hasta el momento podemos agregar a un mismo personaje dentro de nuestra aplicación, pero... ¿Cómo podríamos agregar a distintos personajes?
 
-2. Comprueba que en el navegador deberías ver los cambios.
+🤓 Una buena idea sería utilizar nuestra SearchBar, ¿no te parece?
+
+Podríamos escribir dentro de nuestra SearchBar el **ID** de un personaje, y que este se agregue automáticamente en nuestra aplicación.
+
+✅ ¡Sigamos para descrubir cómo llevar esto a cabo!
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 6 | Parámetros**
+
+Ahora nos dirigiremos a la **`SearchBar`** para realizar algunas modificaciones. De esta forma podremos guardar el **ID** que escriba el usuario de nuestra aplicación.
+
+1. Importa y crea un estado local llamado **id**. Debe inicializarse como un string vacío.
+2. Crea una función **handleChange** de modo que, cada vez que el usuario escriba algo en el input, este se guarde en el estado local **id**.
+3. No te olvides de pasarle esta función al input, y asignarle a este el estado local como su **`value`**.
+4. Una vez que hayas cumplido con todos estos pasos, asegúrate de que cada vez que se ejecute la función **`onSearch`** esa reciba el estado **id** como argumento.
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 7 | API Connection**
+
+Ahora modificaremos la función **`onSearch`** para que busque nuevos personajes en la API de [**Rick & Morty**](https://rickandmortyapi.com). Para esto:
+
+1. Instala la dependencia "**axios**". Una vez instala impórtala en el componente **`App.js`**.
+
+2. Elimina la función **`onSearch`** que ya creaste y remplázala por esta nueva función:
+
+```js
+function onSearch(id) {
+   axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
+      if (data.name) {
+         setCharacters((oldChars) => [...oldChars, data]);
+      } else {
+         window.alert('¡No hay personajes con este ID!');
+      }
+   });
+}
+```
+
+> [**NOTA**]: como aún no hemos visto promesas, tienes este snippet para que copies la funcionalidad.
+
+<br />
+
+---
+
+### **👩‍💻 EJERCICIO 8 | On Close**
+
+En este momento, el componente **`Cards`** les está pasando al componente **`Card`** una función llamada **onClose**. Esta función no está realizando nada más que mostrar un aviso en el navegador. ¡Ahora le daremos la funcionalidad que estamos buscando! Para esto:
+
+1. Dirígete a tu componente **`App.js`** y crea una función con el nombre **onClose**. Esta función recibirá por parámetro un **id**.
+2. Dentro de la función deberás realizar un filtro de tu estado local en el que te quedes con todos aquellos personajes cuyo **id** sea distinto al que recibes por parámetro.
+
+> [**NOTA**]: el id que recibes por parámetro es un string, pero el que debes comparar en tus personajes es un number. ¡Parséalo!
+
+3. Setea este resultado en tu estado local **characters**.
+4. Dirígete al componente **`Cards`** y envíale el **id** del personaje como propiedad al componente **`Card`**.
+5. Finalmente dirígete al componente **`Card`** y pasále el **id** que recibes por props a la funcion **onClose** cuando se ejecuta.
+
+Ahora solo queda que pases esta función al componente **`Cards`**, y que este se la pase al componente **`Card`**.
+
+Este es el resultado esperado:
+
+<img src="./img/final.gif" width='800px'/>
+
+<br />
+
+---
+
+## **📌 EJERCICIO EXTRA**
+
+1. Controla que no se puedan agregar personajes repetidos que ya se muestran en pantalla.
+
+2. Crea un botón en tu componente **`Nav`** que te permita agregar un personaje random.
+
+> [**NOTA**]: hay 826 personajes en total.
