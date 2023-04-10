@@ -1,7 +1,8 @@
 export default function Card({id, name, status, species, gender, image, onClose, origin}) {
+   
    return (
       <div>
-         <button onClick={() => window.alert('Emulamos que se cierra la card')}>X</button>
+         <button onClick={() => onClose(id)}>X</button>
          <h2>{name}</h2>
          <h2>{status}</h2>
          <h2>{species}</h2>
