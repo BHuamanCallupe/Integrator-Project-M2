@@ -1,23 +1,18 @@
 import { useState } from 'react';
-import './App.css';
 import Cards from './components/Cards.jsx';
 import { Nav } from './components/Nav';
-
-const URL_BASE = "https://be-a-rym.up.railway.app/api/character";
-const API_KEY = "edbd97f8be7f.3c691399771f08fdd9f1";
+import { Route, Routes } from 'react-router-dom';
+import { About } from './components/About.jsx';
+import { Detail } from './components/Detail.jsx';
+import { fetch_hook } from './hooks/fetch-hook.jsx';
+import { NotFound } from './components/NotFound.jsx';
 
 function App() {
 
    const [characters, setcharacters] = useState([]);
 
    const onSearch = (characterID) =>{
-      fetch(`${URL_BASE}/${characterID}?key=${API_KEY}`)
-         .then( resp => resp.json())
-         .then((data) => {
-            !data.name && window.alert('¡No hay personajes con este ID!');
-            if(characters.find(character => character.id === characterID)) return window.alert('¡Ya se està mostrando el personaje con este ID!');
-            data.name && setcharacters([...characters, data]);
-         })
+      fetch_hook(characterID, characters, setcharacters);
    }
 
    const onClose = (characterID) =>{
@@ -28,7 +23,13 @@ function App() {
    return (
       <div className='App'>
          <Nav onSearch={onSearch}></Nav>
-         <Cards characters={characters} onClose={onClose}/>
+         <Routes>
+            {/* <Route path='/' element={<About></About>}></Route> */}
+            <Route path='/' element={<Cards characters={characters} onClose={onClose}/>}></Route>
+            <Route path='/about' element={<About></About>}></Route>
+            <Route path='/detail/:id' element={<Detail></Detail>}></Route>
+            <Route path='/*' element={<NotFound></NotFound>}></Route>
+         </Routes>
       </div>
    );
 }

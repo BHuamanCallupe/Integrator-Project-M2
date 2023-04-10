@@ -6,8 +6,6 @@ export default function SearchBar({ onSearch }) {
 
    const handleChange = (event) => {
       setcharacterID(event.target.value);
-      event.target.value = "";
-      event.target.focus();
    }
 
    const randomCharacter = () =>{
