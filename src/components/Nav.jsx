@@ -1,14 +1,14 @@
+import React from 'react'
 import SearchBar from './SearchBar'
 import { Link } from 'react-router-dom'
 
-import React from 'react'
-
-export const Nav = ({onSearch}) => {
+export const Nav = ({onSearch, logout}) => {
   return (
     <>
-      <Link to={"/"}>Home</Link>
+      <Link to={"/home"}>Home</Link>
       <Link to={"/about"}>About</Link>
       <SearchBar onSearch={onSearch} />
+      <button type='button' onClick={() => logout()}>Log out</button>
     </>
   )
 }

@@ -13,8 +13,7 @@ export const fetch_hook = (characterID, characters = [], setcharacters = () => {
     !Array.isArray(characters) && fetch(`${URL_BASE}/${characterID}?key=${API_KEY}`)
         .then(resp => resp.json())
         .then((data) => {
-            !data.name && window.alert('¡No hay personajes con este ID!');
             data.name && setcharacters(data);
         });
-    // !Array.isArray(characters) && console.log(characterID, characters, setcharacters);
+
 }
