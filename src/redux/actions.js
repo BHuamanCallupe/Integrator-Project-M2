@@ -47,20 +47,38 @@ export const removeCurrentCharacter = () =>{
     }
 }
 
+export const onLogin = () => {
+    return {
+        type: "LOGIN"
+    }
+}
+
 export const onLogout = () => {
     return {
         type: "LOGOUT"
     }
 }
 
-const filterCards = (gender) => {
+export const getMyFavorites = () => {
+    return {
+        type: "GET_MY_FAVORITES"
+    }
+}
+
+export const getAllFavorites = () => {
+    return {
+        type: "GET_ALL_FAVORITES"
+    }
+}
+
+export const filterCards = (gender) => {
     return {
         type: "FILTER",
         payload: gender
     }
 }
 
-const orderCards = (orden) => { // A or D
+export const orderCards = (orden) => { 
     return {
         type: "ORDER",
         payload: orden

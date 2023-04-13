@@ -8,7 +8,7 @@ import { NotFound } from './components/NotFound.jsx';
 import { Form } from './components/Form.jsx';
 import { fetch_hook } from './hooks/useFetch.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCharacter, onLogout, removeCharacter, removeFav } from './redux/actions.js';
+import { addCharacter, onLogin, onLogout, removeCharacter, removeFav } from './redux/actions.js';
 import { Favorites } from './components/Favorites.jsx';
 
 const EMAIL = "benny@gmail.com";
@@ -23,10 +23,11 @@ function App() {
    let navigate = useNavigate();
    let dispatch = useDispatch();
    const myFavorites = useSelector(state => state.myFavorites);
+   const storeCharacters = useSelector(state => state.characters);
 
    const onSearch = (characterID) => {
       fetch_hook(characterID, characters, setcharacters);
-      dispatch(addCharacter(characterID));
+      !storeCharacters.find( character => character.id === characterID) && dispatch(addCharacter(characterID));
    }
 
    const onClose = (characterID) => {
@@ -39,14 +40,17 @@ function App() {
    const login = (userData) => {
       if (userData.email === EMAIL && userData.password === PASSWORD) {
          setaccess(true);
+         // dispatch(onLogin());
          navigate("/home");
+      } else {
+         alert("Access denied. User not registered.")
       }
       
    }
 
    const logout = () => {
+      // dispatch(onLogout());
       setaccess(false);
-      dispatch(onLogout())
    }
 
    useEffect(() => {
