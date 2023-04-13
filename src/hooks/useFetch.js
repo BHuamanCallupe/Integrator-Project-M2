@@ -10,10 +10,10 @@ export const fetch_hook = (characterID, characters = [], setcharacters = () => {
             data.name && setcharacters([...characters, data]);
         });
     // Detail
-    !Array.isArray(characters) && fetch(`${URL_BASE}/${characterID}?key=${API_KEY}`)
-        .then(resp => resp.json())
-        .then((data) => {
-            data.name && setcharacters(data);
-        });
+    // !Array.isArray(characters) && fetch(`${URL_BASE}/${characterID}?key=${API_KEY}`)
+    //     .then(resp => resp.json())
+    //     .then((data) => {
+    //         data.name && setcharacters(data);
+    //     });
 
 }

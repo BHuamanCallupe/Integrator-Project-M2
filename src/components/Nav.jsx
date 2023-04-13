@@ -7,6 +7,7 @@ export const Nav = ({onSearch, logout}) => {
     <>
       <Link to={"/home"}>Home</Link>
       <Link to={"/about"}>About</Link>
+      <Link to={"/favorites"}>Favorites</Link>
       <SearchBar onSearch={onSearch} />
       <button type='button' onClick={() => logout()}>Log out</button>
     </>
