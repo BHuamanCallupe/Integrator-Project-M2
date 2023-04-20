@@ -6,7 +6,6 @@ import { About } from './components/About.jsx';
 import { Detail } from './components/Detail.jsx';
 import { NotFound } from './components/NotFound.jsx';
 import { Form } from './components/Form.jsx';
-import { fetch_hook } from './hooks/useFetch.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCharacter, onLogin, onLogout, removeCharacter, removeFav } from './redux/actions.js';
 import { Favorites } from './components/Favorites.jsx';
@@ -26,8 +25,15 @@ function App() {
    const storeCharacters = useSelector(state => state.characters);
 
    const onSearch = (characterID) => {
-      fetch_hook(characterID, characters, setcharacters);
-      !storeCharacters.find( character => character.id === characterID) && dispatch(addCharacter(characterID));
+      // fetch_hook(characterID, characters, setcharacters);
+      fetch(`http://localhost:3001/rickandmorty/character/${characterID}`)
+         .then(resp => resp.json())
+         .then(data => {
+            !data.name && window.alert('¡No hay personajes con este ID!');
+            if (characters.find(character => character.id === characterID)) return window.alert('¡Ya se està mostrando el personaje con este ID!');
+            data.name && setcharacters([...characters, data]);
+         })
+      !storeCharacters.find(character => character.id === characterID) && dispatch(addCharacter(characterID));
    }
 
    const onClose = (characterID) => {
@@ -45,7 +51,7 @@ function App() {
       } else {
          alert("Access denied. User not registered.")
       }
-      
+
    }
 
    const logout = () => {

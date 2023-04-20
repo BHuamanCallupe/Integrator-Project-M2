@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom/dist'
-import { removeCurrentCharacter } from '../redux/actions';
+import { removeCurrentCharacter, setCurrentCharacter } from '../redux/actions';
 
 export const Detail = () => {
   const currentCharacter = useSelector(state => state.currentCharacter);
@@ -13,6 +13,14 @@ export const Detail = () => {
   const handleRemoveCurrentCharacter = () =>{
     dispatch(removeCurrentCharacter());
   }
+
+  useEffect(() => {
+    dispatch(setCurrentCharacter(id));
+    return () => {
+      handleRemoveCurrentCharacter();
+    }
+  }, [id])
+  
   
   return (
     <>

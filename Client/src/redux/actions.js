@@ -33,7 +33,7 @@ export const removeFav = (characterID) =>{
 
 export const setCurrentCharacter = (characterID) =>{
     return function(dispatch){
-        fetch(`${URL_BASE}/${characterID}?key=${API_KEY}`)
+        fetch(`http://localhost:3001/rickandmorty/character/${characterID}`)
         .then(resp => resp.json())
         .then((data) => {
             dispatch({type: "CURRENT_CHARACTER", payload: data})
