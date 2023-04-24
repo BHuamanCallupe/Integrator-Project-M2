@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from 'react-redux'
 import Card from './Card';
 import { filterCards, orderCards } from '../redux/actions';
@@ -45,7 +46,7 @@ export const Favorites = () => {
                     <div>
                         {
                             myFavorites.map((character) => {
-                                return <Card {...character} key={character.id}></Card>
+                                return <Card {...character} key={uuidv4()}></Card>
                             })
                         }
                     </div>

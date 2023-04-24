@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Cards from './components/Cards.jsx';
+import axios from "axios";
 import { Nav } from './components/Nav';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { About } from './components/About.jsx';
@@ -10,47 +11,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCharacter, onLogin, onLogout, removeCharacter, removeFav } from './redux/actions.js';
 import { Favorites } from './components/Favorites.jsx';
 
-const EMAIL = "benny@gmail.com";
-const PASSWORD = "123456";
-
 function App() {
-
-   const [characters, setcharacters] = useState([]);
    const [access, setaccess] = useState(false);
 
    let { pathname } = useLocation();
    let navigate = useNavigate();
    let dispatch = useDispatch();
    const myFavorites = useSelector(state => state.myFavorites);
-   const storeCharacters = useSelector(state => state.characters);
+   const characters = useSelector(state => state.characters);
 
    const onSearch = (characterID) => {
-      // fetch_hook(characterID, characters, setcharacters);
-      fetch(`http://localhost:3001/rickandmorty/character/${characterID}`)
-         .then(resp => resp.json())
-         .then(data => {
-            !data.name && window.alert('¡No hay personajes con este ID!');
-            if (characters.find(character => character.id === characterID)) return window.alert('¡Ya se està mostrando el personaje con este ID!');
-            data.name && setcharacters([...characters, data]);
+      axios.get(`http://localhost:3001/rickandmorty/character/${characterID}`)
+         .then(({ data }) => {
+            if (!data.name) {
+               alert('¡No hay personajes con este ID!');
+               return;
+            } else {
+               if (characters.find(character => character.id === characterID)) {
+                  alert('¡Ya se està mostrando el personaje con este ID!');
+               } else {
+                  data.name && dispatch(addCharacter(data.id));
+               }
+            }
          })
-      !storeCharacters.find(character => character.id === characterID) && dispatch(addCharacter(characterID));
+         .catch( reason => console.log(reason.message))
    }
 
    const onClose = (characterID) => {
-      const newCharacters = characters.filter(character => character.id !== characterID);
-      setcharacters(newCharacters);
       dispatch(removeCharacter(characterID));
       myFavorites.find(favorite => favorite.id === characterID) && dispatch(removeFav(characterID));;
    }
 
    const login = (userData) => {
-      if (userData.email === EMAIL && userData.password === PASSWORD) {
-         setaccess(true);
-         // dispatch(onLogin());
-         navigate("/home");
-      } else {
-         alert("Access denied. User not registered.")
-      }
+      const { email, password } = userData;
+      const URL = 'http://localhost:3001/rickandmorty/login/';
+      axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+         const { access } = data;
+         setaccess(data);
+         access && navigate('/home');
+      });
 
    }
 

@@ -24,10 +24,11 @@ const reducer = (state = initialState, action) => {
                 allFavorites: [...state.allFavorites, action.payload]
             }
         case "REMOVE_FAV":
+            console.log(action.payload);
             return {
                 ...state,
-                allFavorites: state.allFavorites.filter(character => character.id !== action.payload),
-                myFavorites: state.myFavorites.filter(character => character.id !== action.payload)
+                allFavorites: state.allFavorites.filter(character => character.id != action.payload),
+                myFavorites: state.myFavorites.filter(character => character.id != action.payload)
             }
         case "CURRENT_CHARACTER":
             return {
