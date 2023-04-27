@@ -12,6 +12,7 @@ const login = (req, res) => {
             break;
         }
     }
+
     if (obj.access) {
         res.status(200).json(obj);
     } else {

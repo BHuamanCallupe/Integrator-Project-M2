@@ -4,7 +4,6 @@ const postFav = (req, res) => {
 
     if(myFavorites.length === 0) {
         myFavorites = [...myFavorites, req.body];
-        console.log(myFavorites)
         res.json(req.body);
     } else if(myFavorites.find( character => character.id === req.body.id)){
         res.send("Ese personaje ya ha sido agregado.");
