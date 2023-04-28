@@ -2,7 +2,6 @@ const users = require("../utils/users");
 
 const login = (req, res) => {
     const { email, password } = req.query;
-    console.log(email, password)
     const obj = {
         access: false
     }
