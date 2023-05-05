@@ -1,13 +1,14 @@
 const express = require("express");
-const {postFav, deleteFav} = require("../controllers/handleFavorites");
+const postFavorite = require("../controllers/postFavorite");
+const deleteFavorite = require("../controllers/deleteFavorite");
 const favoriteRouter = express.Router();
 
 favoriteRouter.post("/", (req, res) => {
-    postFav(req, res);
+    postFavorite(req, res);
 })
 
 favoriteRouter.delete("/:id", (req, res) => {
-    deleteFav(req, res);
+    deleteFavorite(req, res);
 })
 
 

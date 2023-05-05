@@ -56,19 +56,16 @@ function App() {
     try {
       const { email, password } = userData;
       const URL = "http://localhost:3001/rickandmorty/login/";
-      const {data} = await axios.get(URL + `?email=${email}&password=${password}`);
-      
-      const { access } = data;
-      if(access) {
-         setaccess(true);
-         navigate("/home");
-      } else {
-         setaccess(false);
-         alert("User unauthorized");
-      }
-
+      const { data } = await axios.post(URL, {
+        email,
+        password,
+      });
+      if (data.access) {
+          setaccess(true);
+          navigate("/home");
+      } 
     } catch (error) {
-      alert(error.message);
+      alert(error.response.data.error || error.response.data.message);
     }
   };
 

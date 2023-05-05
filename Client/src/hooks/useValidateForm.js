@@ -8,7 +8,7 @@ export const validate_form = (userData, errors, seterrors, target) => {
             }
             break;
         case "password": // password
-            if (!(/^(?=.*\d).{6,10}$/.test(userData.password))) {
+            if (!(/^[A-Za-z0-9!@#$%^&*()_+=[\]{}|;':",./<>?\\-]{6,10}$/.test(userData.password))) {
                 seterrors({ ...errors, password: "Invalid Password. Must have at least 1 digit and be between 6 and 10 characters long." });
             } else {
                 seterrors({ ...errors, password: "" });
